@@ -82,4 +82,14 @@ public class EvernoteApi {
         }
     }
 
+
+    public void getNote(String guid, OnClientCallback callback) {
+        try {
+            mEvernoteSession.getClientFactory().createNoteStoreClient().getNoteContent(guid, callback);
+        } catch (TTransportException e) {
+            e.printStackTrace();
+            Log.e(TAG, e.getMessage(), e);
+        }
+    }
+
 }

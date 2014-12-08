@@ -26,6 +26,10 @@
             android:name="amcereijo.com.bqevernote.notes.NotesActivity"
             android:label="@string/title_activity_notes" >
         </activity>
+        <activity
+            android:name="amcereijo.com.bqevernote.notes.ViewNote"
+            android:label="@string/title_activity_view_note" >
+        </activity>
     </application>
 
 </manifest>

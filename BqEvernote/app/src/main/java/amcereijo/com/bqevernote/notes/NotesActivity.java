@@ -153,6 +153,7 @@ public class NotesActivity extends RoboFragmentActivity
             noteAdapter = new NoteListElementAdapter(this.getActivity(), R.layout.note_list_element, notesName);
             notesListView = (ListView)rootView.findViewById(R.id.notesListView);
             notesListView.setAdapter(noteAdapter);
+            notesListView.setOnItemClickListener(new NoteListClickListener());
 
             evernoteApi.getNotes(notesName, noteAdapter);
             return rootView;
