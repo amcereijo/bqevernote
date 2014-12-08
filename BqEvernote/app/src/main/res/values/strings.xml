@@ -10,5 +10,7 @@
     <string name="title_new_note">Nueva</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="note_list_sort_name">Ordena por nombre</string>
+    <string name="note_list_sort_date">Ordena por fecha</string>
 
 </resources>

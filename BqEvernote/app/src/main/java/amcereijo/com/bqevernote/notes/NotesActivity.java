@@ -6,6 +6,8 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import com.evernote.edam.type.Note;
 import com.google.inject.Inject;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import amcereijo.com.bqevernote.R;
@@ -112,6 +115,20 @@ public class NotesActivity extends RoboFragmentActivity
         private EvernoteApi evernoteApi;
 
 
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            inflater.inflate(R.menu.note_list_menu, menu);
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.sort_name: sortNotesByName(); break;
+                case R.id.sort_date: sortNotesByDate(); break;
+            }
+            return true;
+        }
+
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -144,8 +161,7 @@ public class NotesActivity extends RoboFragmentActivity
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-
-
+            setHasOptionsMenu(true);
         }
 
         @Override
@@ -153,6 +169,26 @@ public class NotesActivity extends RoboFragmentActivity
             super.onAttach(activity);
             ((NotesActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
+        }
+
+        private void sortNotesByName() {
+            noteAdapter.sort(new Comparator<Note>() {
+                @Override
+                public int compare(Note note, Note note2) {
+                    return note.getTitle().compareTo(note2.getTitle());
+                }
+            });
+            noteAdapter.notifyDataSetChanged();
+        }
+
+        private void sortNotesByDate() {
+            noteAdapter.sort(new Comparator<Note>() {
+                @Override
+                public int compare(Note note, Note note2) {
+                    return new Long(note.getUpdated()).compareTo(note2.getUpdated());
+                }
+            });
+            noteAdapter.notifyDataSetChanged();
         }
     }
 
