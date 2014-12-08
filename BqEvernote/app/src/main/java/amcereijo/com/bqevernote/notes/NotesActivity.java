@@ -2,19 +2,30 @@ package amcereijo.com.bqevernote.notes;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import com.google.inject.Inject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import amcereijo.com.bqevernote.R;
+import amcereijo.com.bqevernote.api.EvernoteApi;
+import roboguice.activity.RoboActivity;
+import roboguice.activity.RoboFragmentActivity;
+import roboguice.fragment.RoboFragment;
+import roboguice.inject.ContentView;
 
-public class NotesActivity extends Activity
+@ContentView(R.layout.activity_notes)
+public class NotesActivity extends RoboFragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
@@ -30,7 +41,6 @@ public class NotesActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_notes);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -40,15 +50,15 @@ public class NotesActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        getSupportFragmentManager().beginTransaction()
+            .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+            .commit();
     }
 
     public void onSectionAttached(int number) {
@@ -82,15 +92,23 @@ public class NotesActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
+
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends RoboFragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+
+        private ArrayAdapter<String> noteAdapter;
+        private List<String> notesName;
+        private ListView notesListView;
+        @Inject
+        private EvernoteApi evernoteApi;
+
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -111,7 +129,20 @@ public class NotesActivity extends Activity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_notes, container, false);
+
+            notesName = new ArrayList<String>();
+            noteAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, notesName);
+            notesListView = (ListView)rootView.findViewById(R.id.notesListView);
+            notesListView.setAdapter(noteAdapter);
+            evernoteApi.getNotes(notesName, noteAdapter);
             return rootView;
+        }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+
         }
 
         @Override

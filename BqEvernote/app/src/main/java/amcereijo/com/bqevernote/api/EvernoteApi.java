@@ -3,10 +3,18 @@ package amcereijo.com.bqevernote.api;
 import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import com.evernote.client.android.EvernoteSession;
+import com.evernote.client.android.OnClientCallback;
+import com.evernote.edam.notestore.NoteFilter;
+import com.evernote.edam.notestore.NoteList;
+import com.evernote.edam.type.Note;
+import com.evernote.thrift.transport.TTransportException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+
+import java.util.List;
 
 import amcereijo.com.bqevernote.R;
 
@@ -18,6 +26,8 @@ public class EvernoteApi {
 
     private static final EvernoteSession.EvernoteService EVERNOTE_SERVICE =
             EvernoteSession.EvernoteService.SANDBOX;
+    private static final String TAG = EvernoteApi.class.getName();
+
     private String consumerKey;
     private String consumerSecret;
     private Application application;
@@ -47,6 +57,30 @@ public class EvernoteApi {
         authToken = mEvernoteSession.getAuthToken();
     }
 
+    public void getNotes(final List<String> notes, final ArrayAdapter adapter) {
+        try {
+            mEvernoteSession.getClientFactory().createNoteStoreClient().findNotes(
+                    new NoteFilter(), 0, 100, new OnClientCallback<NoteList>() {
+                        @Override
+                        public void onSuccess(NoteList data) {
+                            Log.i("", ""+data.getNotes().size());
+                            for (Note note : data.getNotes()) {
+                                String title = note.getTitle();
+                                notes.add(title);
+                            }
+                            adapter.notifyDataSetChanged();
 
+                        }
+
+                        @Override
+                        public void onException(Exception exception) {
+                            Log.e(TAG, exception.getMessage(), exception);
+                        }
+                    }
+            );
+        } catch (TTransportException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
