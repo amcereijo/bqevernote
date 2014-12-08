@@ -64,7 +64,7 @@ public class NotesActivity extends RoboFragmentActivity
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = getString(R.string.title_section1);
+                mTitle = getString(R.string.title_new_note);
                 break;
         }
     }
