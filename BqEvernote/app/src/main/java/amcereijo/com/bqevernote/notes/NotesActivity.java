@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.evernote.client.android.OnClientCallback;
+import com.evernote.edam.notestore.NoteList;
 import com.evernote.edam.type.Note;
 import com.google.inject.Inject;
 
@@ -108,6 +111,8 @@ public class NotesActivity extends RoboFragmentActivity
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        private static final String TAG = PlaceholderFragment.class.getName();
+
         private NoteListElementAdapter noteAdapter;
         private List<Note> notesName;
         private ListView notesListView;
@@ -154,8 +159,8 @@ public class NotesActivity extends RoboFragmentActivity
             notesListView = (ListView)rootView.findViewById(R.id.notesListView);
             notesListView.setAdapter(noteAdapter);
             notesListView.setOnItemClickListener(new NoteListClickListener());
-
-            evernoteApi.getNotes(notesName, noteAdapter);
+            evernoteApi.getNotes(notesCallback);
+            
             return rootView;
         }
 
@@ -191,6 +196,24 @@ public class NotesActivity extends RoboFragmentActivity
             });
             noteAdapter.notifyDataSetChanged();
         }
+
+        private OnClientCallback notesCallback = new OnClientCallback<NoteList>() {
+
+            @Override
+            public void onSuccess(NoteList data) {
+                Log.i("", "" + data.getNotes().size());
+                for (Note note : data.getNotes()) {
+                    notesName.add(note);
+                }
+                noteAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onException(Exception exception) {
+                Log.e(TAG, exception.getMessage(), exception);
+            }
+        };
     }
+
+
 
 }

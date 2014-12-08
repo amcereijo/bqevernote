@@ -57,26 +57,10 @@ public class EvernoteApi {
         authToken = mEvernoteSession.getAuthToken();
     }
 
-    public void getNotes(final List notes, final ArrayAdapter adapter) {
+    public void getNotes(OnClientCallback callback) {
         try {
             mEvernoteSession.getClientFactory().createNoteStoreClient().findNotes(
-                    new NoteFilter(), 0, 100, new OnClientCallback<NoteList>() {
-                        @Override
-                        public void onSuccess(NoteList data) {
-                            Log.i("", ""+data.getNotes().size());
-                            for (Note note : data.getNotes()) {
-                                notes.add(note);
-                            }
-                            adapter.notifyDataSetChanged();
-
-                        }
-
-                        @Override
-                        public void onException(Exception exception) {
-                            Log.e(TAG, exception.getMessage(), exception);
-                        }
-                    }
-            );
+                    new NoteFilter(), 0, 100, callback);
         } catch (TTransportException e) {
             e.printStackTrace();
         }
