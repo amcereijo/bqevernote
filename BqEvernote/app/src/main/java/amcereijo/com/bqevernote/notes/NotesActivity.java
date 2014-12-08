@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
+import com.evernote.edam.type.Note;
 import com.google.inject.Inject;
 
 import java.util.ArrayList;
@@ -103,8 +105,8 @@ public class NotesActivity extends RoboFragmentActivity
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        private ArrayAdapter<String> noteAdapter;
-        private List<String> notesName;
+        private NoteListElementAdapter noteAdapter;
+        private List<Note> notesName;
         private ListView notesListView;
         @Inject
         private EvernoteApi evernoteApi;
@@ -130,10 +132,11 @@ public class NotesActivity extends RoboFragmentActivity
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_notes, container, false);
 
-            notesName = new ArrayList<String>();
-            noteAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, notesName);
+            notesName = new ArrayList<Note>();
+            noteAdapter = new NoteListElementAdapter(this.getActivity(), R.layout.note_list_element, notesName);
             notesListView = (ListView)rootView.findViewById(R.id.notesListView);
             notesListView.setAdapter(noteAdapter);
+
             evernoteApi.getNotes(notesName, noteAdapter);
             return rootView;
         }

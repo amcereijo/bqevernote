@@ -3,6 +3,7 @@
 
     <string name="app_name">BqEvernote</string>
     <string name="welcome">Bievenido</string>
+    <string name="login_with_evernote">Login with Evernote</string>
     <string name="action_settings">Configuración</string>
     <string name="login_error">Upps! Login fallido !!</string>
     <string name="title_activity_notes">Notas</string>

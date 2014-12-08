@@ -12,6 +12,7 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:onClick="login"
-       android:layout_below="@id/title"/>
+       android:layout_below="@id/title"
+       android:text="@string/login_with_evernote"/>
 
 </RelativeLayout>
