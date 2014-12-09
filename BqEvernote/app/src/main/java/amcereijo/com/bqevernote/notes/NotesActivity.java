@@ -2,6 +2,7 @@ package amcereijo.com.bqevernote.notes;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -54,13 +55,21 @@ public class NotesActivity extends RoboFragmentActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
+        RoboFragment fragment = null;
+        switch (position) {
+            case 0 : fragment = (RoboFragment)PlaceholderFragment.newInstance(position + 1); break;
+            case 1 : fragment = NewNoteFragment.newInstance();
+        }
         getSupportFragmentManager().beginTransaction()
-            .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+            .replace(R.id.container,fragment)
             .commit();
     }
 
     public void onSectionAttached(int number) {
         switch (number) {
+            case 0:
+                mTitle = getString(R.string.all_notes);
+                break;
             case 1:
                 mTitle = getString(R.string.title_new_note);
                 break;
@@ -107,6 +116,10 @@ public class NotesActivity extends RoboFragmentActivity
         @Override
         public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
             inflater.inflate(R.menu.note_list_menu, menu);
+            ActionBar actionBar = getActivity().getActionBar();
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setTitle(getString(R.string.all_notes));
         }
 
         @Override
