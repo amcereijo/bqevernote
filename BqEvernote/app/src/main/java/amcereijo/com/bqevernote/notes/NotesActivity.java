@@ -110,15 +110,9 @@ public class NotesActivity extends RoboFragmentActivity
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-
         private static final String TAG = PlaceholderFragment.class.getName();
 
         private NoteListElementAdapter noteAdapter;
-        private List<Note> notesName;
-        private ListView notesListView;
-        @Inject
-        private EvernoteApi evernoteApi;
-
 
         @Override
         public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -154,13 +148,14 @@ public class NotesActivity extends RoboFragmentActivity
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_notes, container, false);
 
-            notesName = new ArrayList<Note>();
-            noteAdapter = new NoteListElementAdapter(this.getActivity(), R.layout.note_list_element, notesName);
-            notesListView = (ListView)rootView.findViewById(R.id.notesListView);
+            noteAdapter = new NoteListElementAdapter(this.getActivity(), R.layout.note_list_element,
+                    new ArrayList<Note>());
+            ListView notesListView = (ListView)rootView.findViewById(R.id.notesListView);
             notesListView.setAdapter(noteAdapter);
             notesListView.setOnItemClickListener(new NoteListClickListener());
-            evernoteApi.getNotes(notesCallback);
-            
+
+            new NoteListAsyncTask(noteAdapter, rootView.getContext()).execute();
+
             return rootView;
         }
 
@@ -197,21 +192,7 @@ public class NotesActivity extends RoboFragmentActivity
             noteAdapter.notifyDataSetChanged();
         }
 
-        private OnClientCallback notesCallback = new OnClientCallback<NoteList>() {
 
-            @Override
-            public void onSuccess(NoteList data) {
-                Log.i("", "" + data.getNotes().size());
-                for (Note note : data.getNotes()) {
-                    notesName.add(note);
-                }
-                noteAdapter.notifyDataSetChanged();
-            }
-            @Override
-            public void onException(Exception exception) {
-                Log.e(TAG, exception.getMessage(), exception);
-            }
-        };
     }
 
 
