@@ -8,6 +8,8 @@ import android.widget.AdapterView;
 
 import com.evernote.edam.type.Note;
 
+import amcereijo.com.bqevernote.notes.view.ViewNoteActivy;
+
 /**
  * Created by amcereijo on 08/12/14.
  */
@@ -18,7 +20,7 @@ public class NoteListClickListener implements AdapterView.OnItemClickListener {
         Note note = (Note)adapterView.getItemAtPosition(i);
         Log.i(TAG, "note:"+note.getGuid());
 
-        Intent intent = new Intent(view.getContext(), ViewNote.class);
+        Intent intent = new Intent(view.getContext(), ViewNoteActivy.class);
         Bundle b = new Bundle();
         b.putSerializable("note", note);
         intent.putExtras(b);

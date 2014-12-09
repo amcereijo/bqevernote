@@ -1,4 +1,4 @@
-package amcereijo.com.bqevernote.notes;
+package amcereijo.com.bqevernote.notes.view;
 
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -14,9 +14,9 @@ import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
 @ContentView(R.layout.activity_view_note)
-public class ViewNote extends RoboActivity {
+public class ViewNoteActivy extends RoboActivity {
 
-    private static final String TAG = ViewNote.class.getName();
+    private static final String TAG = ViewNoteActivy.class.getName();
 
     @InjectView(R.id.note_view_title)
     private TextView titleTextView;

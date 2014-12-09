@@ -1,4 +1,4 @@
-package amcereijo.com.bqevernote.notes;
+package amcereijo.com.bqevernote.notes.view;
 
 import android.app.ProgressDialog;
 import android.content.Context;
