@@ -2,21 +2,14 @@ package amcereijo.com.bqevernote.notes;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ListView;
 
 import com.evernote.client.android.OnClientCallback;
 import com.evernote.edam.notestore.NoteList;
-import com.evernote.edam.type.Note;
 import com.google.inject.Inject;
 
-import java.util.List;
-
-import amcereijo.com.bqevernote.MainActivity;
 import amcereijo.com.bqevernote.R;
 import amcereijo.com.bqevernote.api.EvernoteApi;
-import roboguice.inject.InjectView;
 import roboguice.util.RoboAsyncTask;
 
 /**
@@ -30,7 +23,7 @@ public class NoteListAsyncTask extends RoboAsyncTask<Void> {
     private EvernoteApi evernoteApi;
     private NoteListElementAdapter adapter;
 
-    private final OnClientCallback notesCallback = new OnClientCallback<NoteList>() {
+    private final OnClientCallback<NoteList> notesCallback = new OnClientCallback<NoteList>() {
         @Override
         public void onSuccess(NoteList data) {
             adapter.addAll(data.getNotes());

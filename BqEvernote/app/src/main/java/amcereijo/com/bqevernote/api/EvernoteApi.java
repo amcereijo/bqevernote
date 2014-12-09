@@ -3,18 +3,14 @@ package amcereijo.com.bqevernote.api;
 import android.app.Activity;
 import android.app.Application;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import com.evernote.client.android.EvernoteSession;
 import com.evernote.client.android.OnClientCallback;
 import com.evernote.edam.notestore.NoteFilter;
 import com.evernote.edam.notestore.NoteList;
-import com.evernote.edam.type.Note;
 import com.evernote.thrift.transport.TTransportException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-
-import java.util.List;
 
 import amcereijo.com.bqevernote.R;
 
@@ -57,7 +53,7 @@ public class EvernoteApi {
         authToken = mEvernoteSession.getAuthToken();
     }
 
-    public void getNotes(OnClientCallback callback) {
+    public void getNotes(OnClientCallback<NoteList> callback) {
         try {
             mEvernoteSession.getClientFactory().createNoteStoreClient().findNotes(
                     new NoteFilter(), 0, 100, callback);
@@ -67,7 +63,7 @@ public class EvernoteApi {
     }
 
 
-    public void getNote(String guid, OnClientCallback callback) {
+    public void getNote(String guid, OnClientCallback<String> callback) {
         try {
             mEvernoteSession.getClientFactory().createNoteStoreClient().getNoteContent(guid, callback);
         } catch (TTransportException e) {
