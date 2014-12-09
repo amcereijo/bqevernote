@@ -2,7 +2,6 @@ package amcereijo.com.bqevernote.notes;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -13,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -27,6 +25,7 @@ import java.util.Comparator;
 
 import amcereijo.com.bqevernote.R;
 import amcereijo.com.bqevernote.api.EvernoteApi;
+import amcereijo.com.bqevernote.notes.newnote.NewNoteFragment;
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.ContentView;
