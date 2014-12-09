@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:textSize="22dp"
         android:layout_alignParentTop="true"/>
     <View android:id="@+id/note_view_title_separator"
         android:layout_width="match_parent"
@@ -21,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:gravity="right"
         android:layout_below="@id/note_view_title_separator"/>
     <View android:id="@+id/note_view_date_separator"
         android:layout_width="match_parent"
