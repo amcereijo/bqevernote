@@ -5,6 +5,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.evernote.client.android.EvernoteSession;
+import com.evernote.client.android.InvalidAuthenticationException;
 import com.evernote.client.android.OnClientCallback;
 import com.evernote.edam.notestore.NoteFilter;
 import com.evernote.edam.notestore.NoteList;
@@ -77,6 +78,15 @@ public class EvernoteApi {
         try {
             mEvernoteSession.getClientFactory().createNoteStoreClient().createNote(note, callBack);
         } catch (TTransportException e) {
+            e.printStackTrace();
+            Log.e(TAG, e.getMessage(), e);
+        }
+    }
+
+    public void logout() {
+        try {
+            mEvernoteSession.logOut(application.getApplicationContext());
+        } catch (InvalidAuthenticationException e) {
             e.printStackTrace();
             Log.e(TAG, e.getMessage(), e);
         }
