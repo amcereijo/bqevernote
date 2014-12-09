@@ -1,0 +1,42 @@
+Crear proyecto en github
+
+CLonar en local
+
+Crear proyecto en Android studio
+
+añadir dependencia roboguide - compile 'org.roboguice:roboguice:3.0.1'
+	clase application para bug :
+		// to solve a bug with RoboGuice
+	    static {
+	        RoboGuice.setUseAnnotationDatabases(false);
+	    }
+
+Añadir sdk de evernote descargado e incluirlo como libreria
+
+Clase para manejar las acciones de evernote
+
+Login oauth con evernote
+
+Buscar todas las notas
+
+Listener sobre notas para seleccionar una
+
+Buscar contenido de 1 nota
+
+Mostrar detalles de nota
+
+Usar AsyncTask para cargar lista de notas y contenido de nota
+
+Nuevo fragmen para crear una nota
+
+Nuevo método para crear notas en evernote
+
+Recarga de notas al guardar las notas
+
+
+
+
+
+
+
+
