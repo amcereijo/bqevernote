@@ -70,15 +70,21 @@ public class NotesActivity extends RoboFragmentActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
         RoboFragment fragment = null;
         switch (position) {
             case 0 : fragment = (RoboFragment)PlaceholderFragment.newInstance(position + 1); break;
-            case 1 : fragment = NewNoteFragment.newInstance();
+            case 1 : fragment = NewNoteFragment.newInstance(); break;
+            case 2 : closeSession(); break;
         }
-        getSupportFragmentManager().beginTransaction()
-            .replace(R.id.container, fragment)
-            .commit();
+        if(fragment!=null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment)
+                    .commit();
+        }
+    }
+
+    private void closeSession() {
+        evernoteApi.logout();
+        this.finish();
     }
 
     public void onSectionAttached(int number) {

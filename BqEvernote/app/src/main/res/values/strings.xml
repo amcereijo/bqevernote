@@ -23,5 +23,6 @@
     <string name="cancel">Cancelar</string>
     <string name="create_note_data_error">Introduce un título y contenido para la nota por favor</string>
     <string name="new_note_saving">Guardando...</string>
+    <string name="logout">Cerrar sesión</string>
 
 </resources>
