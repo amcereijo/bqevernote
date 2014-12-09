@@ -8,6 +8,7 @@ import com.evernote.client.android.EvernoteSession;
 import com.evernote.client.android.OnClientCallback;
 import com.evernote.edam.notestore.NoteFilter;
 import com.evernote.edam.notestore.NoteList;
+import com.evernote.edam.type.Note;
 import com.evernote.thrift.transport.TTransportException;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -66,6 +67,15 @@ public class EvernoteApi {
     public void getNote(String guid, OnClientCallback<String> callback) {
         try {
             mEvernoteSession.getClientFactory().createNoteStoreClient().getNoteContent(guid, callback);
+        } catch (TTransportException e) {
+            e.printStackTrace();
+            Log.e(TAG, e.getMessage(), e);
+        }
+    }
+
+    public void addNote(Note note, OnClientCallback<Note> callBack) {
+        try {
+            mEvernoteSession.getClientFactory().createNoteStoreClient().createNote(note, callBack);
         } catch (TTransportException e) {
             e.printStackTrace();
             Log.e(TAG, e.getMessage(), e);

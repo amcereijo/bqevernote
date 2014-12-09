@@ -21,5 +21,7 @@
     <string name="new_note_content_hint">contenido de la nota</string>
     <string name="save">Guardar</string>
     <string name="cancel">Cancelar</string>
+    <string name="create_note_data_error">Introduce un título y contenido para la nota por favor</string>
+    <string name="new_note_saving">Guardando...</string>
 
 </resources>

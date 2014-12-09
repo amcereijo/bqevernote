@@ -3,22 +3,30 @@ package amcereijo.com.bqevernote.notes;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.evernote.client.android.OnClientCallback;
 import com.evernote.edam.type.Note;
+import com.google.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
 import amcereijo.com.bqevernote.R;
+import amcereijo.com.bqevernote.api.EvernoteApi;
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.ContentView;
@@ -26,6 +34,12 @@ import roboguice.inject.ContentView;
 @ContentView(R.layout.activity_notes)
 public class NotesActivity extends RoboFragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    private final static String TAG = NotesActivity.class.getName();
+    private final static String CONTENT_DEFINITION = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE " +
+            "en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">";
+    private final static String START_CONTENT = "<en-note>";
+    private final static String END_CONTENT = "</en-note>";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -36,6 +50,9 @@ public class NotesActivity extends RoboFragmentActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+
+    @Inject
+    private EvernoteApi evernoteApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +78,7 @@ public class NotesActivity extends RoboFragmentActivity
             case 1 : fragment = NewNoteFragment.newInstance();
         }
         getSupportFragmentManager().beginTransaction()
-            .replace(R.id.container,fragment)
+            .replace(R.id.container, fragment)
             .commit();
     }
 
@@ -97,6 +114,46 @@ public class NotesActivity extends RoboFragmentActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void saveNote(final View v){
+        String title = ((EditText)v.getRootView().findViewById(R.id.new_note_title)).getText().toString();
+        String content = ((EditText)v.getRootView().findViewById(R.id.new_note_content)).getText().toString();
+        if(title == null || "".equals(title) || content == null || "".equals(content)){
+            Toast.makeText(this, R.string.create_note_data_error, Toast.LENGTH_LONG).show();
+        } else {
+            createNote(title, content);
+        }
+    }
+
+    private void createNote(String title, String content) {
+        Note note = new Note();
+        note.setTitle(title);
+        content = new StringBuilder().append(CONTENT_DEFINITION).append(START_CONTENT).
+                append(content).append(END_CONTENT).toString();
+        note.setContent(content);
+
+        final ProgressDialog p = new ProgressDialog(this);
+        p.setMessage(getString(R.string.new_note_saving));
+
+        OnClientCallback<Note> callback = new OnClientCallback<Note>() {
+            @Override
+            public void onSuccess(Note data) {
+                p.dismiss();
+                onNavigationDrawerItemSelected(0);
+            }
+            @Override
+            public void onException(Exception exception) {
+                Log.e(TAG, exception.getMessage(), exception);
+            }
+        };
+        p.show();
+        evernoteApi.addNote(note, callback);
+    }
+
+    public void cancelNote(View v){
+        onNavigationDrawerItemSelected(0);
     }
 
 

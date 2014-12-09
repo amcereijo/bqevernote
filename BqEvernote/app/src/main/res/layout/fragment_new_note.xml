@@ -28,13 +28,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/save"/>
+                android:text="@string/save"
+                android:onClick="saveNote"/>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/cancel"/>
+                android:text="@string/cancel"
+                android:onClick="cancelNote"/>
         </LinearLayout>
 
 
