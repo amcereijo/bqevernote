@@ -2,4 +2,6 @@
 <resources>
     <string name="consumer_key">amcereijo</string>
     <string name="consumer_secret">11f45d1a3f8b1e7b</string>
+    <string name="ocr_apikey">usaLaEUkNe</string>
+    <string name="ocr_service_url">http://api.ocrapiservice.com/1.0/rest/ocr</string>
 </resources>

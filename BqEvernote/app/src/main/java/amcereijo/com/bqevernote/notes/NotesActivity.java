@@ -173,7 +173,8 @@ public class NotesActivity extends RoboFragmentActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == HandWriteActivity.RESULT_CODE){
             if(resultCode == RESULT_OK) {
-                Log.i(TAG, data.getDataString());
+                Log.i(TAG, data.getExtras().getString("text"));
+                ((EditText)findViewById(R.id.new_note_content)).setText(data.getExtras().getString("text"));
             }
         }
     }
