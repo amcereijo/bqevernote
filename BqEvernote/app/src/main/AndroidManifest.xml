@@ -27,8 +27,12 @@
             android:label="@string/title_activity_notes" >
         </activity>
         <activity
-            android:name=".notes.view.ViewNoteActivy"
+            android:name="amcereijo.com.bqevernote.notes.view.ViewNoteActivy"
             android:label="@string/title_activity_view_note" >
+        </activity>
+        <activity
+            android:name="amcereijo.com.bqevernote.notes.newnote.HandWriteActivity"
+            android:label="@string/title_activity_hand_write" >
         </activity>
     </application>
 

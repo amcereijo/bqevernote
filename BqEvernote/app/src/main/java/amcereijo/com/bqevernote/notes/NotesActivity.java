@@ -3,6 +3,7 @@ package amcereijo.com.bqevernote.notes;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -25,6 +26,7 @@ import java.util.Comparator;
 
 import amcereijo.com.bqevernote.R;
 import amcereijo.com.bqevernote.api.EvernoteApi;
+import amcereijo.com.bqevernote.notes.newnote.HandWriteActivity;
 import amcereijo.com.bqevernote.notes.newnote.NewNoteFragment;
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.fragment.RoboFragment;
@@ -161,6 +163,20 @@ public class NotesActivity extends RoboFragmentActivity
         onNavigationDrawerItemSelected(0);
     }
 
+    public void toHandWrite(View v){
+        Intent handWriteIntent = new Intent(this, HandWriteActivity.class);
+        Bundle bundle = new Bundle();
+        startActivityForResult(handWriteIntent, HandWriteActivity.RESULT_CODE, bundle);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == HandWriteActivity.RESULT_CODE){
+            if(resultCode == RESULT_OK) {
+                Log.i(TAG, data.getDataString());
+            }
+        }
+    }
 
     /**
      * A placeholder fragment containing a simple view.

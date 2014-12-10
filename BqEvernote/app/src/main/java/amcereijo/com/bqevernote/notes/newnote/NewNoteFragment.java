@@ -2,6 +2,7 @@ package amcereijo.com.bqevernote.notes.newnote;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ public class NewNoteFragment extends RoboFragment {
 
     public NewNoteFragment() {
         // Required empty public constructor
+
     }
 
     @Override

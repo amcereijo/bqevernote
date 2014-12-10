@@ -19,25 +19,36 @@
             android:layout_below="@id/new_note_title"/>
 
 
-        <LinearLayout android:id="@+id/new_note_buttons"
+        <RelativeLayout android:id="@+id/new_note_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:weightSum="2">
-            <Button android:id="@+id/new_note_ok"
-                android:layout_width="0dp"
+            android:layout_alignParentBottom="true">
+            <LinearLayout android:id="@+id/new_note_subbuttons"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/save"
-                android:onClick="saveNote"/>
-
-            <Button
-                android:layout_width="0dp"
+                android:layout_alignParentTop="true"
+                android:weightSum="2">
+                <Button android:id="@+id/new_note_ok"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/save"
+                    android:onClick="saveNote"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cancel"
+                    android:onClick="cancelNote"/>
+            </LinearLayout>
+            <Button android:id="@+id/buton_handwrite"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/cancel"
-                android:onClick="cancelNote"/>
-        </LinearLayout>
+                android:layout_below="@id/new_note_subbuttons"
+                android:text="@string/to_handwrite"
+                android:textAlignment="center"
+                android:onClick="toHandWrite"/>
+        </RelativeLayout>
 
 
         <EditText android:id="@+id/new_note_content"
@@ -47,7 +58,6 @@
             android:layout_above="@id/new_note_buttons"
             android:hint="@string/new_note_content_hint"
             android:gravity="top|left"/>
-
 
 
     </RelativeLayout>
