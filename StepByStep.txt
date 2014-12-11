@@ -1,37 +1,58 @@
 Crear proyecto en github
 
-CLonar en local
+Clonar en local (en mi caso con SmartGit)
 
-Crear proyecto en Android studio
+Crear proyecto en Android studio (Android Studio BETA 0.8.14)
 
-añadir dependencia roboguide - compile 'org.roboguice:roboguice:3.0.1'
-	clase application para bug :
-		// to solve a bug with RoboGuice
-	    static {
-	        RoboGuice.setUseAnnotationDatabases(false);
-	    }
+Añadimos el repositorio de maven a la configuración de Gradle
+  mavenCentral()
+  
+Añadir dependencia roboguide para injecciones de recursos.
+Usando gradle, añadimos la depenedencia:
+  compile 'org.roboguice:roboguice:3.0.1'
 
-Añadir sdk de evernote descargado e incluirlo como libreria
+Existe un bug en la libreria roboguide. Para solucionarlo me obliga a crear una clase "Application" para añadir el código
+// to solve a bug with RoboGuice
+  static {
+    RoboGuice.setUseAnnotationDatabases(false);
+  }
 
-Clase para manejar las acciones de evernote
+Añadir sdk de evernote descargado e incluirlo como libreria.
+Da problemas al usarlo como dependencia de gradle y se recomienda realizarlo de esta forma. Desde a página de evernote se dan estas instrucciones para añadirlo a no ser que se esté utilizando maven en el proyecto.
 
-Login oauth con evernote
+Clase para manejar las acciones de evernote.
 
-Buscar todas las notas
+Login oauth con evernote. Basta con seguir los pasos indicados en la página del sdk de evernote para android
 
-Listener sobre notas para seleccionar una
+Buscar todas las notas. Buscar todas las notas sin aplicar filtros
+Para ordenar notas, simplemtente utilziamos un sort comparator típico de Java sobre la colección de "notas" que hemos recuperado
 
-Buscar contenido de 1 nota
+Crearmos un listener sobre notas para seleccionar una.
 
-Mostrar detalles de nota
+Par buscar contenido de 1 nota, se utiliza el método del api que permite obtener la información completa de una nota en concreto.
+Usamos un Activity nuevp para mostrar detalles de nota.
 
-Usar AsyncTask para cargar lista de notas y contenido de nota
+Uso una forma común para tareas en background en android, mediante un AsyncTask realizo la carga de lista de notas o el contenido de una nota concreta
 
-Nuevo fragmen para crear una nota
+Creamos un nuevo fragment para crear una nota nueva.
 
-Nuevo método para crear notas en evernote
+Con el api de evernote , insetamos una nueva nota. Hay que recordar que el contenido debe ir dentro de una estructura tipo:
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+    <en-note>
+      ...contenido..
+    </en-note>
 
-Recarga de notas al guardar las notas
+Sin llegar a usar un AsyncTask, creo un loading para mostrar mientras se ejecuta el guardado de la nota y uso el método callback para quitar este loading y volver a seleccionar el fragment con todas las notas( lo que provoca la recarga de las mismas)
+
+En el intento de crear un OCR he usado el servicio de http://ocrapiservice.com/ para intentar enviar un PNG capturado de un canvas sobre el que pinto letras.
+Problemas: 
+  -al pintar sobre el canvas, el contenido no se pinta en el punto exacto donde se está escribiendo.
+  -al borrar y pintar de nuevo vuelve a aparecer el contenido
+  -el servicio no reconoce ninguna letra que enviamos en el PNG y devuelve el contenido vacio
+
+
+Como añadido se ha puesta la opción de cerrar la sesión de evernote
 
 
 
