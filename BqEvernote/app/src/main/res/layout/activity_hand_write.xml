@@ -5,10 +5,11 @@
     android:padding="0dp"
     tools:context="amcereijo.com.bqevernote.notes.newnote.HandWriteActivity">
 
-    <ImageView android:id="@+id/handwrite_imageview"
+    <LinearLayout android:id="@+id/handwrite_drawview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"/>
 
     <RelativeLayout android:id="@+id/handwrite_buttons"
         android:layout_width="match_parent"
