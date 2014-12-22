@@ -3,19 +3,9 @@ package amcereijo.com.bqevernote.notes.newnote;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.PorterDuff;
-import android.graphics.RectF;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -24,8 +14,6 @@ import com.google.inject.Inject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import amcereijo.com.bqevernote.R;
 import amcereijo.com.bqevernote.notes.newnote.views.DrawView;
@@ -51,14 +39,11 @@ public class HandWriteActivity extends RoboActivity {
     private void createDrawView() {
         drawView = new DrawView(this);
         ((LinearLayout)findViewById(R.id.handwrite_drawview)).addView(drawView);
+        drawView.setDrawingCacheEnabled(true);
     }
 
     private void createBitmap(){
-        Display currentDisplay = drawView.getDisplay();
-        Point point = new Point();
-        currentDisplay.getSize(point);
-        bitmap = Bitmap.createBitmap(point.x, point.y,
-                Bitmap.Config.ARGB_8888);
+        bitmap = drawView.getDrawingCache();
     }
 
     @Inject
@@ -73,10 +58,11 @@ public class HandWriteActivity extends RoboActivity {
             @Override
             public void run() {
                 try {
-                    File fTemp = File.createTempFile("canvas", ".png");
+                    File fTemp =  File.createTempFile("canvas", ".png");
                     FileOutputStream fos = new FileOutputStream(fTemp);
                     createBitmap();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                    fos.close();
                     if(ocrServiceAPI.convertToText("es", fTemp.getAbsolutePath()) &&
                             ocrServiceAPI.getResponseCode() == 200){
                         String text = ocrServiceAPI.getResponseText();
