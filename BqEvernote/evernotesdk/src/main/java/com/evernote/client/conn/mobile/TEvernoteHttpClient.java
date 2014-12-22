@@ -20,6 +20,7 @@ package com.evernote.client.conn.mobile;
 
 import com.evernote.thrift.transport.TTransport;
 import com.evernote.thrift.transport.TTransportException;
+
 import org.apache.http.ConnectionReuseStrategy;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

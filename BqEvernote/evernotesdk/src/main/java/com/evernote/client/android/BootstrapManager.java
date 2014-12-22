@@ -26,6 +26,7 @@
 package com.evernote.client.android;
 
 import android.util.Log;
+
 import com.evernote.edam.userstore.BootstrapInfo;
 import com.evernote.edam.userstore.BootstrapProfile;
 import com.evernote.thrift.TException;

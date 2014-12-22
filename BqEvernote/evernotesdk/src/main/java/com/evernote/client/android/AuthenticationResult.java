@@ -27,6 +27,7 @@ package com.evernote.client.android;
 
 import android.content.SharedPreferences;
 import android.util.Log;
+
 import com.evernote.edam.type.User;
 
 /**

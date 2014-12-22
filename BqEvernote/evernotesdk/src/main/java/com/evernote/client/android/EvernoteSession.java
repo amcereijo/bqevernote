@@ -37,6 +37,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+
 import com.evernote.client.oauth.EvernoteAuthToken;
 
 import java.util.Locale;
