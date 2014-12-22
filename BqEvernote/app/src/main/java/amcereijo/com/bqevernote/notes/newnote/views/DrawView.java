@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,7 +29,7 @@ public class DrawView extends View {
         mBitmapBrush = BitmapFactory.decodeResource(context.getResources(), R.drawable.brush);
         mBitmapBrushDimensions = new Point(mBitmapBrush.getWidth(), mBitmapBrush.getHeight());
 
-        setBackgroundColor(0xffffffff);
+        setBackgroundColor(Color.WHITE);
     }
 
     @Override
